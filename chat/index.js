@@ -1,7 +1,8 @@
+// Login, Register, Main
+
 import Login from "./pages/Login.js";
 
-const login = new Login();
-
 const appEl = document.getElementById("app");
+const loginPage = new Login();
 
-appEl.appendChild(login.render());
+appEl.appendChild(loginPage.render());

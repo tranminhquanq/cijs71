@@ -1,11 +1,11 @@
 class InputGroup {
-  constructor(labelName, inputType, placeholder) {
-    this.$container = document.createElement("div");
-    this.$container.setAttribute("class", "flex flex-col mb-4");
+  constructor(lableName, inputType, placeholder) {
+    this.$inputGroupContainer = document.createElement("div");
+    this.$inputGroupContainer.setAttribute("class", "flex flex-col mb-4");
 
     this.$label = document.createElement("label");
-    this.$label.setAttribute("class", "mb-2 text-white font-bold");
-    this.$label.innerText = labelName;
+    this.$label.setAttribute("class", "text-white mb-2");
+    this.$label.innerText = lableName;
 
     this.$input = document.createElement("input");
     this.$input.setAttribute("class", "py-2 px-4 rounded-lg");
@@ -14,10 +14,10 @@ class InputGroup {
   }
 
   render() {
-    this.$container.appendChild(this.$label);
-    this.$container.appendChild(this.$input);
+    this.$inputGroupContainer.appendChild(this.$label);
+    this.$inputGroupContainer.appendChild(this.$input);
 
-    return this.$container;
+    return this.$inputGroupContainer;
   }
 }
 
