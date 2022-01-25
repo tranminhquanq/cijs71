@@ -13,6 +13,10 @@ class InputGroup {
     this.$input.placeholder = placeholder;
   }
 
+  getValue() {
+    return this.$input.value;
+  }
+
   render() {
     this.$container.appendChild(this.$label);
     this.$container.appendChild(this.$input);

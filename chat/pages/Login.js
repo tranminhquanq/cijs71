@@ -1,4 +1,10 @@
+import { signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.6.4/firebase-auth.js";
+
+import Register from "./Register.js";
+import Main from "./Main.js";
 import InputGroup from "../components/InputGroup.js";
+import app from "../index.js";
+import { auth } from "../constants/commons.js";
 
 class Login {
   constructor() {
@@ -23,23 +29,50 @@ class Login {
     );
     this.$loginBtn.type = "submit";
     this.$loginBtn.innerText = "Login";
+
+    this.$goToRegisterPage = document.createElement("span");
+    this.$goToRegisterPage.setAttribute(
+      "class",
+      "text-white ml-4 cursor-pointer"
+    );
+    this.$goToRegisterPage.innerText = "Don't have an account?";
+    this.$goToRegisterPage.addEventListener("click", this.goToRegisterPage);
   }
 
-  onSubmit = (event) => {
-    event.preventDefault();
-    console.log({
-      email: "j2team.tranminhquang@gmail.com",
-      password: "123",
-    });
+  goToRegisterPage = () => {
+    const registerScreen = new Register();
+    app.setActiveScreen(registerScreen);
   };
 
-  render() {
+  onSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      const email = this.$email.getValue();
+      const password = this.$password.getValue();
+
+      if (email && password) {
+        const response = await signInWithEmailAndPassword(
+          auth,
+          email,
+          password
+        );
+        const user = response.user;
+        if (user) {
+          alert("Login Successful");
+        }
+      }
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+
+  render(container) {
     this.$loginContainer.appendChild(this.$email.render());
     this.$loginContainer.appendChild(this.$password.render());
-
     this.$loginContainer.appendChild(this.$loginBtn);
+    this.$loginContainer.appendChild(this.$goToRegisterPage);
 
-    return this.$loginContainer;
+    container.appendChild(this.$loginContainer);
   }
 }
 
