@@ -1,9 +1,15 @@
 import { signOut } from "https://www.gstatic.com/firebasejs/9.6.4/firebase-auth.js";
 import { auth } from "../constants/commons.js";
+import ConversationList from "../components/ConversationList.js";
+import Chat from "../components/Chat.js";
 
 class Main {
   constructor() {
     this.$mainContainer = document.createElement("div");
+    this.$mainContainer.setAttribute("class", "flex");
+
+    this.$conversationList = new ConversationList();
+    this.$chatComponent = new Chat();
 
     this.$welcome = document.createElement("h1");
     this.$welcome.innerText = "Welcome to Chat";
@@ -30,8 +36,11 @@ class Main {
   };
 
   render(container) {
-    this.$mainContainer.appendChild(this.$welcome);
-    this.$mainContainer.appendChild(this.$signOutButton);
+    // this.$mainContainer.appendChild(this.$welcome);
+    // this.$mainContainer.appendChild(this.$signOutButton);
+    this.$mainContainer.appendChild(this.$conversationList.render());
+    this.$mainContainer.appendChild(this.$chatComponent.render());
+
     container.appendChild(this.$mainContainer);
   }
 }
