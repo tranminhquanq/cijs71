@@ -15,7 +15,7 @@ class Login {
     );
     this.$loginContainer.addEventListener("submit", this.onSubmit);
 
-    this.$email = new InputGroup("Email", "email", "Enter your email");
+    this.$email = new InputGroup("Email", "text", "Enter your email");
     this.$password = new InputGroup(
       "Password",
       "password",
@@ -49,6 +49,18 @@ class Login {
     try {
       const email = this.$email.getValue();
       const password = this.$password.getValue();
+
+      if (email.length === 0) {
+        this.$email.setErrorMsg("Email is required");
+      } else {
+        this.$email.setErrorMsg("");
+      }
+
+      if (password.length === 0) {
+        this.$password.setErrorMsg("Password is required");
+      } else {
+        this.$password.setErrorMsg("");
+      }
 
       if (email && password) {
         const response = await signInWithEmailAndPassword(
