@@ -1,3 +1,10 @@
+import {
+  doc,
+  setDoc,
+  collection,
+  addDoc,
+} from "https://www.gstatic.com/firebasejs/9.6.4/firebase-firestore.js";
+import { auth, db } from "../constants/commons.js";
 import InputGroup from "./InputGroup.js";
 
 class NewConversationModal {
@@ -9,6 +16,11 @@ class NewConversationModal {
     );
     this.$container.addEventListener("submit", this.onSubmit);
 
+    this.$conversationName = new InputGroup(
+      "Conversation Name",
+      "text",
+      "Enter your conversation name"
+    );
     this.$email = new InputGroup("Email", "text", "Enter email");
 
     this.$submit = document.createElement("button");
@@ -23,10 +35,25 @@ class NewConversationModal {
   onSubmit = (e) => {
     e.preventDefault();
     const email = this.$email.getValue();
-    console.log("Submit", email);
+    const conversationName = this.$conversationName.getValue();
+
+    const newConversationDocument = {
+      members: [email, auth.currentUser.email],
+      conversationName,
+      createdAt: new Date().valueOf(),
+    };
+
+    // using setDoc function to create a new document in the collection
+    // const collectionRef = doc(db, "conversations", "hahahhaa");
+    // setDoc(collectionRef, newConversationDocument);
+
+    // using addDoc function to create a new document in the collection
+    const conversationRef = collection(db, "conversations");
+    addDoc(conversationRef, newConversationDocument);
   };
 
   render() {
+    this.$container.appendChild(this.$conversationName.render());
     this.$container.appendChild(this.$email.render());
     this.$container.appendChild(this.$submit);
     return this.$container;

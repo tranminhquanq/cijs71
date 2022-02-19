@@ -27,6 +27,7 @@ class NewConversationButton {
   render() {
     this.$container.insertAdjacentHTML("afterbegin", this.$pencilSVG);
     this.$container.appendChild(this.$newConversation);
+
     return this.$container;
   }
 }

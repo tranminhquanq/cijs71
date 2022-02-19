@@ -1,5 +1,5 @@
 class ConversationItem {
-  constructor(index) {
+  constructor(conversationInfo) {
     this.$container = document.createElement("div");
     this.$container.setAttribute(
       "class",
@@ -7,7 +7,7 @@ class ConversationItem {
     );
 
     this.$conversationName = document.createElement("h4");
-    this.$conversationName.textContent = `Conversation ${index}`;
+    this.$conversationName.textContent = conversationInfo.conversationName;
   }
 
   render() {
