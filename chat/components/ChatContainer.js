@@ -15,6 +15,11 @@ class ChatContainer {
     this.$messageList = new MessageList();
   }
 
+  setActiveConversation(activeConversation) {
+    this.$activeConversationTitle.setConversation(activeConversation);
+    this.$messageList.setConversation(activeConversation);
+  }
+
   render(mainContainer) {
     this.$chatContainer.appendChild(this.$activeConversationTitle.render());
     this.$chatContainer.appendChild(this.$messageList.render());

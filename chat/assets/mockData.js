@@ -20,3 +20,30 @@ export const mockConversation = [
     createdAt: "2020-05-06",
   },
 ];
+
+export const mockMessage = [
+  {
+    content: "Hello",
+    createdAt: 1,
+    conversationId: "a",
+    senderId: "quang",
+  },
+  {
+    content: "mom",
+    createdAt: 2,
+    conversationId: "a",
+    senderId: "anonymous",
+  },
+  {
+    content: "How are you?",
+    createdAt: 3,
+    conversationId: "a",
+    senderId: "quang",
+  },
+  {
+    content: "I'm fine",
+    createdAt: 4,
+    conversationId: "a",
+    senderId: "anonymous",
+  },
+];

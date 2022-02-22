@@ -6,8 +6,16 @@ class Main {
     this.$mainContainer = document.createElement("div");
     this.$mainContainer.setAttribute("class", "flex");
 
-    this.$conversationList = new ConversationList();
+    this.$conversationList = new ConversationList((conversation) => {
+      this.setActiveConversation(conversation);
+    });
     this.$chatContainer = new ChatContainer();
+
+    console.log(this.$chatContainer);
+  }
+
+  setActiveConversation(conversation) {
+    this.$chatContainer.setActiveConversation(conversation);
   }
 
   render(container) {

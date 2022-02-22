@@ -17,7 +17,9 @@ import NewConversationButton from "./NewConversationButton.js";
 import NewConversationModal from "./NewConversationModal.js";
 
 class ConversationList {
-  constructor() {
+  constructor(setActiveConversation) {
+    this._setActiveConversation = setActiveConversation;
+    console.log("this._setActiveConversation", this._setActiveConversation);
     this.$container = document.createElement("div");
     this.$container.setAttribute(
       "class",
@@ -79,11 +81,18 @@ class ConversationList {
     // __________________________________________
     // listen for realtime updates collection
     const conversationsRef = collection(db, "conversations");
-    onSnapshot(conversationsRef, (snapshot) => {
+    const q = query(
+      conversationsRef,
+      where("members", "array-contains", auth.currentUser.email)
+    );
+    onSnapshot(q, (snapshot) => {
       snapshot.docChanges().forEach((change) => {
         if (change.type === "added") {
           const conversationDoc = change.doc.data();
-          const conversationItem = new ConversationItem(conversationDoc);
+          const conversationItem = new ConversationItem(
+            conversationDoc,
+            this._setActiveConversation
+          );
           this.$container.appendChild(conversationItem.render());
         }
       });
