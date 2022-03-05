@@ -1,6 +1,10 @@
+import { addDoc } from "https://www.gstatic.com/firebasejs/9.6.4/firebase-firestore.js";
+import { auth, messagesRef } from "../constants/commons.js";
 class ChatInput {
+  _activeConversation;
   constructor() {
     this.$container = document.createElement("form");
+    this.$container.setAttribute("class", "mb-2");
     this.$container.addEventListener("submit", this.onSubmit);
 
     this.$input = document.createElement("input");
@@ -12,10 +16,43 @@ class ChatInput {
     );
   }
 
-  onSubmit = (event) => {
-    event.preventDefault();
-    console.log("new message");
+  onSubmit = async (event) => {
+    // event.preventDefault();
+    // const newMsg = {
+    //   content: this.$input.value,
+    //   createdAt: new Date().valueOf(),
+    //   senderId: auth.currentUser.uid,
+    //   conversationId: this._activeConversation.conversationId,
+    // };
+    // const messageRef = collection(db, "messages");
+    // addDoc(messageRef, newMsg)
+    //   .then(() => {})
+    //   .catch((err) => {
+    //     alert(err.message);
+    //   });
+    try {
+      event.preventDefault();
+      const msgValue = this.$input.value;
+
+      if (msgValue.trim().length !== 0) {
+        const newMsg = {
+          content: msgValue,
+          createdAt: new Date().valueOf(),
+          senderId: auth.currentUser.uid,
+          conversationId: this._activeConversation.conversationId,
+        };
+
+        addDoc(messagesRef, newMsg);
+        this.$input.value = "";
+      }
+    } catch (err) {
+      alert(err.message);
+    }
   };
+
+  setConversation(conversation) {
+    this._activeConversation = conversation;
+  }
 
   render() {
     this.$container.appendChild(this.$input);

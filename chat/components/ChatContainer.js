@@ -18,6 +18,7 @@ class ChatContainer {
   setActiveConversation(activeConversation) {
     this.$activeConversationTitle.setConversation(activeConversation);
     this.$messageList.setConversation(activeConversation);
+    this.$chatInput.setConversation(activeConversation);
   }
 
   render(mainContainer) {
